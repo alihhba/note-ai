@@ -62,6 +62,23 @@ export async function POST(req: Request) {
   }
 }
 
+export async function GetNotes() {
+  try {
+    const { userId } = auth();
+
+    if (!userId) {
+      return new NextResponse("Unauthorized error", { status: 401 });
+    }
+
+    const notes = await db.note.findMany({ where: { userId } });
+
+    return notes;
+  } catch (error) {
+    console.log(`[GET-NOTES-ERROR]`, error);
+    return new NextResponse("Internal error", { status: 500 });
+  }
+}
+
 export async function DELETE(req: Request) {
   try {
     const { userId } = auth();

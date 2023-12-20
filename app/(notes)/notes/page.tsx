@@ -1,3 +1,4 @@
+import { GetNotes } from "@/app/api/notes/route";
 import Cart from "@/components/Cart";
 import OpenAiCahtBox from "@/components/OpenAiCahtBox";
 import {
@@ -18,7 +19,13 @@ const NotePage = async () => {
     redirect("/sign-up");
   }
 
-  const Notes = await db.note.findMany({ where: { userId } });
+  const Notes = await db.note.findMany({
+    where: { userId: userId.toString() },
+  });
+
+  // const Notes = await GetNotes();
+
+  // console.log(Notes);
 
   // try {
   //   const Notes = await axios.get("http://localhost:3000/api/notes");
